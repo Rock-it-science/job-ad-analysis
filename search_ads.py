@@ -1,3 +1,4 @@
+import json
 from bs4 import BeautifulSoup
 import urllib3
 http = urllib3.PoolManager()
@@ -22,13 +23,17 @@ def search(search_url):
             # Append link
             job_links.append('https://ca.indeed.com/viewjob' + job_link[7:])
     
-    # For every item in job_links, pass to scraper and write results to files
-    dir = 'job_descriptions/'
+    # For every item in job_links, pass to scraper and save results in a dict
+    ads_dict = {}
+    ads_dict['ads'] = []
     for link in job_links:
-        # Name of file as unique part of url
-        f = open(dir + link[33:49] + '.txt', 'a')
-        f.write(scrape(link))
-        f.close()
+        ads_dict['ads'].append({
+            'id': link[33:49],
+            'content': scrape(link)
+        })
+        
+    with open('job_ads.json', 'a') as f:
+        json.dump(ads_dict, f, ensure_ascii=False, indent=4)
 
     return 'Done'
 
