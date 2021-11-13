@@ -9,9 +9,9 @@ location = "Vancouver, BC"
 # Iterate through pages until attempt to access page index returns an error
 ads_dict = {}
 try:
-    i = 700
+    i = 0
     while True:
-        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&limit=50&start='+str(i)
+        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&radius=1000&limit=50&filter=0&start='+str(i)
         ads_dict = search(url)
         print('Searching ', url)
         print(str(len(ads_dict)), ' pages scanned')
