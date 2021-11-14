@@ -43,3 +43,23 @@ Week 12: Finish analysis, and start video and deliverables
 Week 13: presentation video
 
 Week 14: project deliverables.
+
+## NLP Functions
+
+### Defining Skills
+
+From case study 5 in class, we can use the 3 syntactic patterns for skills:
+
+ 1. Noun phrase (e.g., Java, ability to work independently, university degree, written communication)
+
+ 2. Verb phrase (e.g., develop web application, design software)
+
+ 3. Noun + Gerund (e.g., problem solving, web programming)
+
+To identify these in the text we can use some of the below functions and libraries:
+
+ 1. [Natural Language Toolkit (NLTK) Part-of-speech Tagging](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills.
+
+[PyTorch Text Classification](https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html)
+
+[TensorFlow Text Classification](https://www.tensorflow.org/tutorials/keras/text_classification)
