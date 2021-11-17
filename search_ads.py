@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
+import csv
 import urllib3
+
 http = urllib3.PoolManager()
 
 from scraper import scrape
@@ -26,14 +28,22 @@ def search(search_url, ads_dict={}):
     if len(job_links) == 0:
         raise Exception('No jobs in page')
     
-    # For every item in job_links, pass to scraper and save results in a dict
+    # Get list of job links that already exist in our data
+    exist_links = []
+    with open('processed.csv', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            exist_links.append(row[1])
+
+    # For every item in job_links, check if we already have the link, if not, pass to scraper and save results in a dict
     ads_dict[search_url] = []
     for link in job_links:
-        results = scrape(link)
-        ads_dict[search_url].append({
-            'url': link,
-            'title': results[0],
-            'content': results[1]
-        })
+        if link not in exist_links:
+            results = scrape(link)
+            ads_dict[search_url].append({
+                'url': link,
+                'title': results[0],
+                'content': results[1]
+            })
 
     return ads_dict
