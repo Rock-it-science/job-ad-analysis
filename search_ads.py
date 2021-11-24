@@ -30,7 +30,7 @@ def search(search_url, ads_dict={}):
     
     # Get list of job links that already exist in our data
     exist_links = []
-    with open('processed.csv', encoding='utf-8') as f:
+    with open('unique_ads.csv', encoding='utf-8') as f:
         reader = csv.reader(f)
         for row in reader:
             exist_links.append(row[1])
