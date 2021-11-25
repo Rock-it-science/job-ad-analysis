@@ -56,10 +56,10 @@ From case study 5 in class, we can use the 3 syntactic patterns for skills:
 
  3. Noun + Gerund (e.g., problem solving, web programming)
 
-To identify these in the text we can use some of the below functions and libraries:
+### Pre-Processing for Skill Identification
 
- 1. [Natural Language Toolkit (NLTK) Part-of-speech Tagging](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills.
+ My process is centered around [Natural Language Toolkit (NLTK) Part-of-speech (POS) Tagging](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills.
 
-[PyTorch Text Classification](https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html)
+ POS tagging makes use of another function called chunking, which ...
 
-[TensorFlow Text Classification](https://www.tensorflow.org/tutorials/keras/text_classification)
+ After tagging the POS for each phrase, the text is the tagged POS get passed to another function: lemmatization, which will standardize different forms of the same word to make it easier for us to classify skills in the next step.

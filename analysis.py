@@ -1,4 +1,4 @@
-from nltk import pos_tag, RegexpParser, sent_tokenize, Tree, word_tokenize
+from nltk import pos_tag, RegexpParser, sent_tokenize, Tree, word_tokenize, WordNetLemmatizer
 
 def pos_tagging(text):
     """
@@ -43,6 +43,7 @@ def pos_tagging(text):
     for ng in noun_gerund_phrases:
         print(ng)
 
+# Chunking
 def chunk(sentences, pattern):
     results = []
 
@@ -68,4 +69,42 @@ def chunk(sentences, pattern):
     
     return results
 
-pos_tagging("Every year, we welcome thousands of university students from every corner of the world to join Microsoft. You bring your aspirations, talent, potential and excitement for the journey ahead. At Microsoft, Interns work on real-world projects in collaboration with teams across the world, while having fun along the way. You willll be empowered to build community, explore your passions and achieve your goals. This is your chance to bring your solutions and ideas to life while working on cutting-edge technology. The internship is designed not only for you to do great work with the opportunity to learn and grow, but to experience our culture full of diverse community connection, executive engagement, and memorable events. Were a company of learn-it-alls rather than know-it-alls and our culture is centered around embracing a growth mindset, a theme of inspiring excellence, and encouraging teams and leaders to bring their best each day. Does this sound like you? Learn more about our cultural attributes. Are you ready to join us and create the future? Come as you are, do what you love. Start your journey with us today! Responsibilities. Software engineers (SWEs) work with teammates to solve problems and build innovative software solutions. You are passionate about customers and product quality, and you provide technical guidance to Program Managers as they consider user needs and product requirements. You will also be expected to demonstrate an ability to learn and adopt relevant new technologies, tools, methods, and processes to leverage in your solutions. As a SWE, you are dedicated to design, development, and testing of next-generation software which will empower every person and organization on the planet to achieve more. Applies engineering principles to solve complex problems through sound and creative engineering. Quickly learns new engineering methods and incorporates them into his or her work processes. Seeks feedback and applies internal or industry best practices to improve his or her technical solutions. Demonstrates skill in time management and completing software projects in a cooperative team environment. Qualifications. Pursuing a bachelor's or master's degree in engineering, computer science or related field. Must have at least one additional quarter/semester of school remaining following the completion of the internship. One year of programming experience in an object-oriented language. Ability to demonstrate an understanding of computer science fundamentals, including data structures and algorithms. Visit our Careers FAQ Page to learn more about the interview process and answers to commonly asked questions. Microsoft is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to age, ancestry, color, family or medical care leave, gender identity or expression, genetic information, marital status, medical condition, national origin, physical or mental disability, political affiliation, protected veteran status, race, religion, sex (including pregnancy), sexual orientation, or any other characteristic protected by applicable laws, regulations and ordinances. We also consider qualified applicants regardless of criminal histories, consistent with legal requirements. If you need assistance and/or a reasonable accommodation due to a disability during the application or the recruiting process, please send a request via the Accommodation request form. Benefits/perks listed below may vary depending on the nature of your employment with Microsoft and the country where you work.")
+# Test
+# pos_tagging("Every year, we welcome thousands of university students from every corner of the world to join Microsoft. You bring your aspirations, talent, potential and excitement for the journey ahead. At Microsoft, Interns work on real-world projects in collaboration with teams across the world, while having fun along the way. You willll be empowered to build community, explore your passions and achieve your goals. This is your chance to bring your solutions and ideas to life while working on cutting-edge technology. The internship is designed not only for you to do great work with the opportunity to learn and grow, but to experience our culture full of diverse community connection, executive engagement, and memorable events. Were a company of learn-it-alls rather than know-it-alls and our culture is centered around embracing a growth mindset, a theme of inspiring excellence, and encouraging teams and leaders to bring their best each day. Does this sound like you? Learn more about our cultural attributes. Are you ready to join us and create the future? Come as you are, do what you love. Start your journey with us today! Responsibilities. Software engineers (SWEs) work with teammates to solve problems and build innovative software solutions. You are passionate about customers and product quality, and you provide technical guidance to Program Managers as they consider user needs and product requirements. You will also be expected to demonstrate an ability to learn and adopt relevant new technologies, tools, methods, and processes to leverage in your solutions. As a SWE, you are dedicated to design, development, and testing of next-generation software which will empower every person and organization on the planet to achieve more. Applies engineering principles to solve complex problems through sound and creative engineering. Quickly learns new engineering methods and incorporates them into his or her work processes. Seeks feedback and applies internal or industry best practices to improve his or her technical solutions. Demonstrates skill in time management and completing software projects in a cooperative team environment. Qualifications. Pursuing a bachelor's or master's degree in engineering, computer science or related field. Must have at least one additional quarter/semester of school remaining following the completion of the internship. One year of programming experience in an object-oriented language. Ability to demonstrate an understanding of computer science fundamentals, including data structures and algorithms. Visit our Careers FAQ Page to learn more about the interview process and answers to commonly asked questions. Microsoft is an equal opportunity employer. All qualified applicants will receive consideration for employment without regard to age, ancestry, color, family or medical care leave, gender identity or expression, genetic information, marital status, medical condition, national origin, physical or mental disability, political affiliation, protected veteran status, race, religion, sex (including pregnancy), sexual orientation, or any other characteristic protected by applicable laws, regulations and ordinances. We also consider qualified applicants regardless of criminal histories, consistent with legal requirements. If you need assistance and/or a reasonable accommodation due to a disability during the application or the recruiting process, please send a request via the Accommodation request form. Benefits/perks listed below may vary depending on the nature of your employment with Microsoft and the country where you work.")
+
+# Lemmatization
+def lemmatization(text):
+    lemmatizer = WordNetLemmatizer()
+
+    # Tokenize
+    tokenized = word_tokenize(text)
+
+    # Apply pos tagging on each individual word
+    tagged = pos_tag(tokenized)
+
+    # Separate words and tags
+    words = [token[0] for token in tagged]
+    tags = [token[1] for token in tagged]
+
+    # Convert pos tags to simple tags for lemmatization (lem. only knows noun, verb, adjective, adverb, and satellite adjective)
+    simple_tags = []
+    for tag in tags:
+        if tag.startswith('J'):
+            simple_tags.append('a')
+        elif tag.startswith('V'):
+            simple_tags.append('v')
+        elif tag.startswith('N'):
+            simple_tags.append('n')
+        elif tag.startswith('R') or tag.startswith('WR'):
+            simple_tags.append('r')
+        else:
+            simple_tags.append(None)
+
+    lemmatized = []
+    for i in [0, len(words)-1]:
+        lemmatized.append(lemmatizer.lemmatize(words[i], pos=simple_tags[i]))
+    
+    return lemmatized
+
+# Test
+print(lemmatization("asking for some friends"))
