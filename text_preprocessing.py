@@ -23,8 +23,8 @@ with open('unique_ads.csv') as raw_file:
         adreader = csv.reader(raw_file)
         for row in adreader:
             # Also remove the b'' that got hardcoded in an earlier step, as well as other quotes
-            processed_title = re.sub('[\'\"b]+', '', row[2])
-            processed_content = re.sub('[\'\"b]+', '', preprocess(row[3]))
+            processed_title = re.sub('(b\')|(b\")|\'|\"', '', row[2])
+            processed_content = re.sub('(b\')|(b\")|\'|\"', '', preprocess(row[3][1:]))
             # Write to file - Add quotes back to title and content, but now consistently
             processed_file.write(str("\n" + row[0] + ', ' + row[1] + ', \"' + processed_title + '\", \"' + processed_content + '\"'))
         print('Finished preprocessing')

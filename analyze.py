@@ -25,5 +25,7 @@ with open('processed_ads.csv') as ads_file:
 with open('skill_counts.csv','w') as skill_file:
     print('Writing skills to file')
     csvwriter = csv.writer(skill_file)
+    # Header row
+    csvwriter.writerow(['Skill', 'Count'])
     for skill in all_skills:
         csvwriter.writerow([skill, all_skills[skill]])
