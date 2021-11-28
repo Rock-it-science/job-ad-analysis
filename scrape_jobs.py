@@ -4,18 +4,18 @@ import json
 import pandas as pd
 
 from search_ads import search
-from compile_ads import add_new_ads
+from compile_ads import add_new_ads, build_unique_ads
 
-search_term = "Manager"
-location = "Vancouver, BC"
+search_term = "Software Developer"
+location = "Richmond, BC"
 
 # Iterate through pages until attempt to access page index returns an error
 ads_dict = {}
 try:
     i = 0
-    while True:
+    while i < 150:
         # Can add: '&sort=date' to get most recent ads
-        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&radius=100&limit=50&filter=0&start='+str(i)
+        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&radius=100&sort=date&limit=50&filter=0&start='+str(i)
         ads_dict = search(url)
         print('Searching ', url)
         print(str(len(ads_dict)), ' pages scanned')
@@ -33,8 +33,11 @@ except Exception as e: # Compile and process all results
         # Get number of jobs before we add new ones
         df = pd.read_csv("unique_ads.csv")
         prior_size = len(df.index)
-        
-    add_new_ads(filename)
+
+    # TODO fix add_new_ads  
+    # add_new_ads(filename)
+    # For now we will just rebuild unique_ads on a new search
+    build_unique_ads()
 
     # Get size number of jobs after we have added new ones
     df = pd.read_csv("unique_ads.csv")

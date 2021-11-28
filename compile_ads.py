@@ -29,13 +29,13 @@ def add_new_ads(filename):
                     result['title'] = result['title'].encode('utf-8')
                     result['content'] = result['content'].encode('utf-8')
                     # Write to csv file
-                    csvwriter.writerow([result['url'], result['title'], result['content']])
+                    csvwriter.writerow([],[result['url'], result['title'], result['content']])
 
             # Read unique ads into pandas dataframe for cleaning
             df = pd.read_csv('unique_ads.csv')
 
             # Drop index read from csv column
-            df.drop(['Unnamed: 0'], axis=1, inplace=True)
+            #df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
             # Drop duplicates
             df = df.drop_duplicates()
@@ -104,6 +104,8 @@ def build_unique_ads():
 
     # Write to processed.csv
     df.to_csv('unique_ads.csv')
+
+    return
 
 
 # Testing

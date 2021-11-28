@@ -6,7 +6,7 @@ def preprocess(text):
     # TODO Remove Unicode references
     
     # Replace newline with space
-    filetext = text.replace('\n', ' ')
+    filetext = text.replace('\\n', ' ')
 
     # Remove non-alphanumeric characters (keep spaces and sentence-delimiting punctuation)
     filetext = re.sub('[^A-Z a-z ]+', '', filetext)
