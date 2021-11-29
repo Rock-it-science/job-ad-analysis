@@ -47,6 +47,7 @@ Week 14: project deliverables.
 ## What's here
 
  - Scraper framework is finished - some fine-tuning may be done
+ - Scraped job data. So far I have about 5'000 ads out of the 10'000 required. Some tuning will likely have to be done with my searches to reach 10'000.
  - Data pipeline for pre-processing raw job ads is functional, but some parts are still being worked on
     - The function to add new ads for example is curently not working, so I rebuild the entire unique_ads CSV file every time a new search is ran
  - Text pre-processing is functional, but needs more testing
@@ -57,10 +58,11 @@ Week 14: project deliverables.
 
 ## What's not here
 
- - Need to manually code list of results to remove non-skills
+ - Manually code list of results to remove non-skills
     - I also need to re-write many to be grammatically correct as lemmatization will make many phrases sound weird (problem solve vs. problem solving for example)
- - Need to create visualizations of results
- - Need to write report on results
+ - Separate final results by search term
+ - Create visualizations of results
+ - Write report on results
 
 # NLP Functions
 
