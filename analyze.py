@@ -3,7 +3,7 @@ import csv
 import analysis_functions
 
 # Test analysis
-with open('processed_ads.csv') as ads_file:
+with open('data/processed_ads.csv') as ads_file:
     csvreader = csv.reader(ads_file, skipinitialspace=True)
     i = 0
     all_skills = {} # Keep a dict of skills and their count
@@ -22,7 +22,7 @@ with open('processed_ads.csv') as ads_file:
             #break # Just analyze 1 row for now
         i += 1
 
-with open('skill_counts.csv','w') as skill_file:
+with open('data/skill_counts.csv','w') as skill_file:
     print('Writing skills to file')
     csvwriter = csv.writer(skill_file)
     # Header row

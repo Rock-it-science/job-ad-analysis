@@ -2,8 +2,6 @@ import csv
 import re
 
 def preprocess(text):
-
-    # TODO Remove Unicode references
     
     # Replace newline with space
     filetext = text.replace('\\n', ' ')
@@ -18,8 +16,8 @@ def preprocess(text):
     return filetext
 
 # Preprocess all files from unique_ads.csv and output to processed_ads.csv
-with open('unique_ads.csv') as raw_file:
-    with open('processed_ads.csv', 'w') as processed_file:
+with open('data/unique_ads.csv') as raw_file:
+    with open('data/processed_ads.csv', 'w') as processed_file:
         adreader = csv.reader(raw_file)
         for row in adreader:
             # Also remove the b'' that got hardcoded in an earlier step, as well as other quotes
