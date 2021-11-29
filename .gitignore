@@ -1,2 +1,4 @@
 /raw_ads
 /__pycache__
+*.csv
+*.json
