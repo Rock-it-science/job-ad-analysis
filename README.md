@@ -44,6 +44,26 @@ Week 13: presentation video
 
 Week 14: project deliverables.
 
+### Midpoint Status - November 29
+
+#### What's here
+
+ - Scraper framework is finished - some fine-tuning may be done
+ - Data pipeline for pre-processing raw job ads is functional, but some parts are still being worked on
+    - The function to add new ads for example is curently not working, so I rebuild the entire unique_ads CSV file every time a new search is ran
+ - Text pre-processing is functional, but needs more testing
+ - Analysis pipeline is functional but very slow, and currently the only option is to completely re-process all ads at once
+    - Want to make this process more efficient
+    - Want to create option to just process new ads
+    - Some improvements/tweaks could be made to analysis functions with more testing
+
+#### What's not here
+
+ - Need to manually code list of results to remove non-skills
+    - I also need to re-write many to be grammatically correct as lemmatization will make many phrases sound weird (problem solve vs. problem solving for example)
+ - Need to create visualizations of results
+ - Need to write report on results
+
 ## NLP Functions
 
 ### Defining Skills
@@ -58,8 +78,8 @@ From case study 5 in class, we can use the 3 syntactic patterns for skills:
 
 ### Pre-Processing for Skill Identification
 
- My process is centered around [Natural Language Toolkit (NLTK) Part-of-speech (POS) Tagging](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills.
+ My process is centered around [Natural Language Toolkit (NLTK) **Part-of-speech (POS) Tagging**](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study from class, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills. POST tagging itself is comprised of a few steps. First, segments the text ..., it then tokenizes the text.... Finally the text is tagged as part of speech.
 
- POS tagging makes use of another function called chunking, which ...
+ After the text has been tagged, we use another function called **chunking**, which uses entity and relation detection to identify our skill patterns that we defined above. Chunking takes in the tagged text, and returns chunks of the text that match our patterns.
 
- After tagging the POS for each phrase, the text is the tagged POS get passed to another function: lemmatization, which will standardize different forms of the same word to make it easier for us to classify skills in the next step.
+ After tagging and chunking, we finally pass the matching chunks to be **lemmatized**. This process is similar to stemming, but will standardize different forms of the same word. This will combine many similar results that are linguistically equivalent.
