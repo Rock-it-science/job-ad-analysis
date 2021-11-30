@@ -1,3 +1,5 @@
+# Will McFarland
+
 # Project Description
 
 Project for COSC 329 - Learning Analytics to scrape and analyze over 10'000 job ads
@@ -58,9 +60,10 @@ Week 14: project deliverables.
 
 ## What's not here
 
+ - Continue scraping to reach 10'000 ads
  - Manually code list of results to remove non-skills
     - I also need to re-write many to be grammatically correct as lemmatization will make many phrases sound weird (problem solve vs. problem solving for example)
- - Separate final results by search term
+ - Separate/compare final results by job title
  - Create visualizations of results
  - Write report on results
 
@@ -78,7 +81,7 @@ From case study 5 in class, we can use the 3 syntactic patterns for skills:
 
 ## Pre-Processing for Skill Identification
 
- My process is centered around [Natural Language Toolkit (NLTK) **Part-of-speech (POS) Tagging**](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study from class, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills. POST tagging itself is comprised of a few steps. First, segments the text ..., it then tokenizes the text.... Finally the text is tagged as part of speech.
+ My process is centered around [Natural Language Toolkit (NLTK) **Part-of-speech (POS) Tagging**](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study from class, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills. POS tagging itself is comprised of a few steps. First, segment the text ..., it then tokenizes the text.... Finally the text is tagged as part of speech.
 
  After the text has been tagged, we use another function called **chunking**, which uses entity and relation detection to identify our skill patterns that we defined above. Chunking takes in the tagged text, and returns chunks of the text that match our patterns.
 
