@@ -19,11 +19,21 @@ def preprocess(text):
 with open('data/unique_ads.csv') as raw_file:
     with open('data/processed_ads.csv', 'w') as processed_file:
         adreader = csv.reader(raw_file)
+        # TODO write header, and prevent rest of script from breaking it
         for row in adreader:
             # Also remove the b'' that got hardcoded in an earlier step, as well as other quotes
             processed_title = re.sub('(b\')|(b\")|\'|\"', '', row[2])
             processed_content = re.sub('(b\')|(b\")|\'|\"', '', preprocess(row[3][1:]))
+
+            # Add job title category - either 'software developer' or 'manager'
+            title_cat = ''
+            proc_title_low = processed_title.lower() # Processed title in all lowercase
+            if 'manager' in proc_title_low or 'supervisor' in proc_title_low:
+                title_cat = 'manager'
+            elif 'software' in proc_title_low or 'developer' in proc_title_low or 'engineer' in proc_title_low:
+                title_cat = 'software developer'
+
             # Write to file - Add quotes back to title and content, but now consistently
-            processed_file.write(str("\n" + row[0] + ', ' + row[1] + ', \"' + processed_title + '\", \"' + processed_content + '\"'))
+            processed_file.write(str("\n" + row[0] + ', ' + row[1] + ', \"' + processed_title + '\", \"' + title_cat + '\", \"' + processed_content + '\"'))
         print('Finished preprocessing')
             
