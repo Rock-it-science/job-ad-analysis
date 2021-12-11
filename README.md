@@ -44,29 +44,6 @@ Week 13: presentation video
 
 Week 14: project deliverables.
 
-# Midpoint Status - November 29
-
-## What's here
-
- - Scraper framework is finished - some fine-tuning may be done
- - Scraped job data. So far I have about 5'000 ads out of the 10'000 required. Some tuning will likely have to be done with my searches to reach 10'000.
- - Data pipeline for pre-processing raw job ads is functional, but some parts are still being worked on
-    - The function to add new ads for example is curently not working, so I rebuild the entire unique_ads CSV file every time a new search is ran
- - Text pre-processing is functional, but needs more testing
- - Analysis pipeline is functional but very slow, and currently the only option is to completely re-process all ads at once
-    - Want to make this process more efficient
-    - Want to create option to just process new ads
-    - Some improvements/tweaks could be made to analysis functions with more testing
-
-## What's not here
-
- - Continue scraping to reach 10'000 ads
- - Manually code list of results to remove non-skills
-    - I also need to re-write many to be grammatically correct as lemmatization will make many phrases sound weird (problem solve vs. problem solving for example)
- - Separate/compare final results by job title
- - Create visualizations of results
- - Write report on results
-
 # NLP Functions
 
 ## Defining Skills
@@ -89,10 +66,29 @@ From case study 5 in class, we can use the 3 syntactic patterns for skills:
 
 # Instructions
 
- 1. **Scrape ads**: Modify lines 9 and 10 in `scrape-jobs.py` to be the desired search terms, then run with `python scrape_jobs.py`. You can also change line 16 to limit the number of jobs to look at (if left to `while True`, it will run until it either gets to a blank page, or the site rate-limits your IP address). Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
+ 1. **Scrape ads**: Modify lines 9 and 10 in `scrape-jobs.py` to be the desired search terms, then run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
  
- 2. **Pre-process ads**: The resulting text is very raw, and contains characters we don't want to remove before our analysis. We can now run `python text_preprocessing.py` to process the text. This script will output to `data/processed_ads.csv`.
+ 2. **Pre-process ads**: The scraped ad text is very raw and contains characters we want remove before our analysis. We can now run `python text_preprocessing.py` to process the text. This script will output to `data/processed_ads.csv`.
 
- 3. **Analyze ads**: Its now time to run the NLP functions on our data. This is very time-consuming, but when you're ready you can run `python analyze.py` to analyze all of our job ads. This will output to `data/skill_counts.csv`.
+ 3. **Analyze ads**: Its now time to run the NLP functions on our data. This is somewhat time-consuming to run on the full dataset, but when you're ready you can run `python analyze.py` to analyze all job ads. This will output to `data/skill_counts.csv` and `data/job_skills.csv`.
 
- 4. The last step is to look at our results! More processing will come soon, but we can open the file in excel and sort by `Count` descending to see the most common skills! Do note that manual coding will be required to eliminate non-skills from this list.
+ 4. The last step is to look at the results!
+
+# Results
+
+See `report notebook.ipynb` for the results.
+
+# Challenges/Shortcomings
+
+The biggest challenge with this project was the scraping stage. First there was challenges with ratelimiting, where Indeed will return a Captcha if more than approximately 800 requests are sent in short succession. I was able to get around this by waiting a little bit between requests, and using a VPN to change my IP address to avoid wait times. Beyond that, the greater challenge was Indeed limiting the number of search results it can return to 1000 per search. So even if I had a search that claims it has 5'000 results, I will realistically only be able to fetch the first 1'000. There were a couple workaround here, namely sorting by date vs relavence, and setting different search distances would shuffle the results a little bit. In the end though, I ended up needing to broaden my search terms to reach 10'000 results, even if it meant that I wouldn't be getting that much more useful data. I did always ensure that the results I was getting were unique. The metric I used for uniqueness was the URL, which I later realized was an imperfect metric, as some ads had duplicate (or near-duplicate) job descriptions, but in different postings/URLs.
+
+Another challenge I had was defining skills. As mentioned in the case study in class, there is very little research into this topic, so I essentially just used the example given in that case study but it proved to produce a lot of false positive results (words that were not skills).
+
+I also realized in the analysis stage that 'Software Developer' may have been too specific of a term. Many of the results did not actually contain 'software developer' in the job title, which resulted in me having to exclude a lot of my data from the analysis.
+
+**What I would do if I had more time...**
+
+ - Look for more ads by broadening my geographic search area
+ - Filter out duplicate or near-duplicate ad descriptions
+ - Improve my chunking patterns to better catch skills
+ - Choose a broader search term than 'software developer'
