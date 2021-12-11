@@ -1,9 +1,10 @@
 from nltk import pos_tag, RegexpParser, sent_tokenize, Tree, word_tokenize, WordNetLemmatizer
+#from pprint import pprint
 
 def pos_tagging(text):
     """
     List of all tag codes available here: https://www.guru99.com/pos-tagging-chunking-nltk.html
-    Docs: https://www.nltk.org/book/ch05.html
+    Docs: https://www.nltk.org/book/ch05.html, https://www.nltk.org/book/ch07.html
     Chunking help from here: https://stackoverflow.com/questions/49564176/python-nltk-more-efficient-way-to-extract-noun-phrases
 
     From the class reading, we will identify skills as:
@@ -19,12 +20,13 @@ def pos_tagging(text):
     sentences = sent_tokenize(text)
     sentences = [word_tokenize(sentence) for sentence in sentences]
     sentences = [pos_tag(sentence) for sentence in sentences]
+    #pprint(sentences)
 
     # Step 2: Chunking (entity detection -> relation detection)
     # Start with just noun phrases
     noun_phrases = []
-    noun_phrase_pattern = "Noun Phrase: {(<V\w+>|<NN\w?>)+.*<NN\w?>}"
-    verb_phrase_pattern = "Verb Phrase: {<VB.*><DT>?<JJ>*<NN><RB.?>?}" # Source: https://www.codecademy.com/courses/natural-language-processing/lessons/nlp-regex-parsing-intro/exercises/chunking-verb-phrases
+    noun_phrase_pattern = "Noun Phrase: {<DT|PP\$>?<JJ>*<NN>}"
+    verb_phrase_pattern = "Verb Phrase: {<DT>?<JJ>*<NN><VB.*><RB.?>?}"
     noun_gerund_phrase_pattern = "Noun Gerund: {<NN><VBG>}"
 
     noun_phrases = chunk(sentences, noun_phrase_pattern)
@@ -33,24 +35,34 @@ def pos_tagging(text):
     
     skills = []
 
-    #print("Noun Phrases:")
-    for np in noun_phrases[0]:
-        #print('    ' + ' '.join(lemmatization(np)))
-        skills.append(' '.join(lemmatization(np)))
+    #print("Noun Phrases:\n")
+    for sentence in noun_phrases:
+        #print(sentence)
+        for np in sentence:
+            #print('\n noun phrase:' + np)
+            #print('\n lemmatized: '.join(lemmatization(np)))
+            skills.append(' '.join(lemmatization(np)))
 
-    #print("\n\nVerb Phrases:")
-    for vp in verb_phrases[0]:
-        #print('    ' + ' '.join(lemmatization(str(vp))))
-        skills.append(' '.join(lemmatization(vp)))
+    #print("Verb Phrases:\n")
+    for sentence in verb_phrases:
+        #print(sentence)
+        for vp in sentence:
+            #print('\n verb phrase:' + vp)
+            #print('\n lemmatized: '.join(lemmatization(vp)))
+            skills.append(' '.join(lemmatization(vp)))
 
-    #print("\n\nNoun Gerund Phrases:")
-    for ng in noun_gerund_phrases[0]:
-        #print('    ' + ' '.join(lemmatization(str(ng))))
-        skills.append(' '.join(lemmatization(ng)))
+    #print("Noun Gerund Phrases:\n")
+    for sentence in noun_gerund_phrases:
+        #print(sentence)
+        for ng in sentence:
+            #print('\n noun gerund phrase:' + ng)
+            #print('\n lemmatized: '.join(lemmatization(ng)))
+            skills.append(' '.join(lemmatization(ng)))
         
     return skills
 
 # Chunking
+# Credit: https://stackoverflow.com/questions/49564176/python-nltk-more-efficient-way-to-extract-noun-phrases
 def chunk(sentences, pattern):
     results = []
 
