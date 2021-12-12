@@ -58,7 +58,7 @@ Files not included in the above flowchart:
 
 # Instructions - How to run the code
 
- 1. **Scrape ads**: Open `scrape-jobs.py` and modify lines 9 and 10 to be the desired search terms. Run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
+ 1. **Scrape ads**: Open `scrape-jobs.py` and modify lines 9 and 10 to be the desired search terms. You can also adjust the number of jobs to scan on line 16. The defualt is 100, but you can increase this to up to 1000. Run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
  
  2. **Pre-process ads**: The scraped ad text is very raw and contains characters we want remove before our analysis. We can now run `python text_preprocessing.py` to process the text. This script will output to `data/processed_ads.csv`.
 

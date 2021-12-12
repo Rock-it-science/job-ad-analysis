@@ -13,7 +13,7 @@ location = "Vancouver, BC"
 ads_dict = {}
 try:
     i = 0
-    while i < 1000: # Frustratingly, Indeed only shows 1000 ads for a search
+    while i < 100: # Frustratingly, Indeed only shows 1000 ads for a search
         # Can add: '&sort=date' to get most recent ads or remove it for different order
         url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&filter=0&sort=date&radius=100&limit=50&start='+str(i)
         ads_dict = search(url)
