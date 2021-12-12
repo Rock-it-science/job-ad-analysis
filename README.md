@@ -44,27 +44,17 @@ Week 13: presentation video
 
 Week 14: project deliverables.
 
-# NLP Functions
+# Program Flow and File Structure
 
-## Defining Skills
+The flowchart below describes the interaction between all files in detail.
 
-From case study 5 in class, we can use the 3 syntactic patterns for skills:
+![Flowchart](assets/flowchart.jpg)
 
- 1. Noun phrase (e.g., Java, ability to work independently, university degree, written communication)
+Files not included in the above flowchart:
+ - **`report.ipynb`: The project report notebook!**
+ - `testing.py`: Unit tests for the major components of the project.
 
- 2. Verb phrase (e.g., develop web application, design software)
-
- 3. Noun + Gerund (e.g., problem solving, web programming)
-
-## Pre-Processing for Skill Identification
-
- My process is centered around [Natural Language Toolkit (NLTK) **Part-of-speech (POS) Tagging**](https://www.nltk.org/api/nltk.tag.html): This method was mentioned in the case study from class, and we can use it to tag phrases as what part of speech they are (noun, verb, etc.) to help extract the patterns above from the text to identify skills. POS tagging itself is comprised of a few steps. First, segment the text ..., it then tokenizes the text.... Finally the text is tagged as part of speech.
-
- After the text has been tagged, we use another function called **chunking**, which uses entity and relation detection to identify our skill patterns that we defined above. Chunking takes in the tagged text, and returns chunks of the text that match our patterns.
-
- After tagging and chunking, we finally pass the matching chunks to be **lemmatized**. This process is similar to stemming, but will standardize different forms of the same word. This will combine many similar results that are linguistically equivalent.
-
-# Instructions
+# Instructions - How to run the code
 
  1. **Scrape ads**: Modify lines 9 and 10 in `scrape-jobs.py` to be the desired search terms, then run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
  
@@ -74,17 +64,13 @@ From case study 5 in class, we can use the 3 syntactic patterns for skills:
 
  4. The last step is to look at the results!
 
-# Results
+ # Challenges/Shortcomings
 
-See `report notebook.ipynb` for the results.
+The biggest challenge with this project was the scraping stage. First there was challenges with ratelimiting, where Indeed will return a Captcha if more than approximately 800 requests are sent in short succession. I was able to get around this by waiting between requests, and using a VPN to change my IP address to avoid wait times. Beyond that, Indeed limits search results to 1000 per search. That is, even a search claims there are 5'000 results, I will realistically only be able to fetch the first 1'000. There were a couple workaround here, namely sorting by date vs relavence, and setting different search distances to shuffle the results a little bit. In the end, I needed to broaden my search terms to reach 10'000 ads, even if it meant that I wouldn't be getting that much more useful data. I did always ensure that the results were unique however. The metric I used for uniqueness was the URL, which I later realized was an imperfect metric, as some ads had duplicate (or near-duplicate) job descriptions, but in different postings/URLs.
 
-# Challenges/Shortcomings
+Another challenge I faced was defining skills. As mentioned in the case study in class, there is very little research into this topic, so I just went with the example given in that case study. As expected, it proved to be a weak method for identifying skills. Fortunetely, it still found enough that I had some useful results, and after cleaning the data I found that it did identify many commons skills that would be expected for the given job titles.
 
-The biggest challenge with this project was the scraping stage. First there was challenges with ratelimiting, where Indeed will return a Captcha if more than approximately 800 requests are sent in short succession. I was able to get around this by waiting a little bit between requests, and using a VPN to change my IP address to avoid wait times. Beyond that, the greater challenge was Indeed limiting the number of search results it can return to 1000 per search. So even if I had a search that claims it has 5'000 results, I will realistically only be able to fetch the first 1'000. There were a couple workaround here, namely sorting by date vs relavence, and setting different search distances would shuffle the results a little bit. In the end though, I ended up needing to broaden my search terms to reach 10'000 results, even if it meant that I wouldn't be getting that much more useful data. I did always ensure that the results I was getting were unique. The metric I used for uniqueness was the URL, which I later realized was an imperfect metric, as some ads had duplicate (or near-duplicate) job descriptions, but in different postings/URLs.
-
-Another challenge I had was defining skills. As mentioned in the case study in class, there is very little research into this topic, so I essentially just used the example given in that case study but it proved to produce a lot of false positive results (words that were not skills).
-
-I also realized in the analysis stage that 'Software Developer' may have been too specific of a term. Many of the results did not actually contain 'software developer' in the job title, which resulted in me having to exclude a lot of my data from the analysis.
+I also realized in the analysis stage that 'Software Developer' may have been too specific of a term. Many of the results did not actually contain 'software developer' in the job title, which forced me to exclude a lot of my data from the analysis in order to maintain consistency.
 
 **What I would do if I had more time...**
 
