@@ -53,6 +53,7 @@ The flowchart below describes the interaction between all files in detail.
 Files not included in the above flowchart:
  - [report.ipynb](report.ipynb): **The project report notebook!**
  - `demo_report.ipynb`: Exerpt from the full report ran on a smaller dataset for the demo video.
+ - `data/Job Skills Analysis.xlsx`: Spreadsheet containing the full dataset as outputted by `analysis.py` as well as some data cleaning and charts on the most common skill phrases.
  - `slides.pptx`: Slides used in the demo video.
  - `testing.py`: Unit tests for the major components of the project.
 
