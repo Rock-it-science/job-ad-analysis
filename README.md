@@ -52,11 +52,13 @@ The flowchart below describes the interaction between all files in detail.
 
 Files not included in the above flowchart:
  - **`report.ipynb`: The project report notebook!**
+ - `demo_report.ipynb`: Exerpt from the full report ran on a smaller dataset for the demo video.
+ - `slides.pptx`: Slides used in the demo video.
  - `testing.py`: Unit tests for the major components of the project.
 
 # Instructions - How to run the code
 
- 1. **Scrape ads**: Modify lines 9 and 10 in `scrape-jobs.py` to be the desired search terms, then run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
+ 1. **Scrape ads**: Open `scrape-jobs.py` and modify lines 9 and 10 to be the desired search terms. Run with `python scrape_jobs.py`. Once the script is complete, it will print out a preview of the results. The full results can be seen in `data/unique_ads.csv`.
  
  2. **Pre-process ads**: The scraped ad text is very raw and contains characters we want remove before our analysis. We can now run `python text_preprocessing.py` to process the text. This script will output to `data/processed_ads.csv`.
 
@@ -64,11 +66,17 @@ Files not included in the above flowchart:
 
  4. The last step is to look at the results!
 
+ - To run the unit tests, simply run `python testing.py`. Note that as job ads on Indeed change, these tests may fail. See the comments in the code for more details.
+
+# Demo Video
+
+[See the demo video here](https://youtu.be/g_iUF5H22Kc)
+
  # Challenges/Shortcomings
 
-The biggest challenge with this project was the scraping stage. First there was challenges with ratelimiting, where Indeed will return a Captcha if more than approximately 800 requests are sent in short succession. I was able to get around this by waiting between requests, and using a VPN to change my IP address to avoid wait times. Beyond that, Indeed limits search results to 1000 per search. That is, even a search claims there are 5'000 results, I will realistically only be able to fetch the first 1'000. There were a couple workaround here, namely sorting by date vs relavence, and setting different search distances to shuffle the results a little bit. In the end, I needed to broaden my search terms to reach 10'000 ads, even if it meant that I wouldn't be getting that much more useful data. I did always ensure that the results were unique however. The metric I used for uniqueness was the URL, which I later realized was an imperfect metric, as some ads had duplicate (or near-duplicate) job descriptions, but in different postings/URLs.
+The biggest challenge with this project was the scraping stage. First there was challenges with ratelimiting, where Indeed will return a Captcha if more than approximately 800 requests are sent in short succession. I was able to get around this by waiting between requests, and using a VPN to change my IP address to avoid wait times. Beyond that, Indeed limits search results to 1000 per search. That is, even a search claims there are 5'000 results, I will realistically only be able to fetch the first 1'000. There were a couple workarounds here, namely sorting by date vs relavence, and setting different search distances to shuffle the results a little bit. In the end, I needed to broaden my search terms to reach 10'000 ads, even if it meant that I wouldn't be getting that much more useful data. I did always ensure that the results were unique however. The metric I used for uniqueness was the URL, which I later realized was an imperfect metric, as some ads had duplicate (or near-duplicate) job descriptions, but in different postings/URLs.
 
-Another challenge I faced was defining skills. As mentioned in the case study in class, there is very little research into this topic, so I just went with the example given in that case study. As expected, it proved to be a weak method for identifying skills. Fortunetely, it still found enough that I had some useful results, and after cleaning the data I found that it did identify many commons skills that would be expected for the given job titles.
+Another challenge I faced was defining skills. As mentioned in the case study in class, there is very little research into this topic, so I just went with the example given in that case study. As expected, it proved to be a weak method for identifying skills as it produced a lot of false positives (phrases that were not actually skills). Fortunetely, it worked well enough to produce some useful results, and after cleaning some of the data I found that it did identify many real skills from the ads that make sense for the given job titles.
 
 I also realized in the analysis stage that 'Software Developer' may have been too specific of a term. Many of the results did not actually contain 'software developer' in the job title, which forced me to exclude a lot of my data from the analysis in order to maintain consistency.
 
