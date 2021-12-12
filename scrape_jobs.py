@@ -6,16 +6,16 @@ import pandas as pd
 from search_ads import search
 from compile_ads import add_new_ads, build_unique_ads
 
-search_term = "Manager"
+search_term = "Software Developer"
 location = "Vancouver, BC"
 
 # Iterate through pages until attempt to access page index returns an error
 ads_dict = {}
 try:
     i = 0
-    while i < 150:
-        # Can add: '&sort=date' to get most recent ads
-        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&radius=100&sort=date&limit=50&filter=0&start='+str(i)
+    while i < 1000: # Frustratingly, Indeed only shows 1000 ads for a search
+        # Can add: '&sort=date' to get most recent ads or remove it for different order
+        url = 'https://ca.indeed.com/jobs?q=' + search_term + '&l=' + location + '&filter=0&sort=date&radius=100&limit=50&start='+str(i)
         ads_dict = search(url)
         print('Searching ', url)
         print(str(len(ads_dict)), ' pages scanned')
